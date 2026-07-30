@@ -1,10 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
-from fastapi.staticfiles import StaticFiles
 
 app = FastAPI(title="DevOps Blog")
-
-app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 user_profile = {
