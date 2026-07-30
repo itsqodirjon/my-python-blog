@@ -1,60 +1,29 @@
 <!DOCTYPE html>
-<html lang="uz" class="dark">
+<html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ profile.name }} | {{ profile.role }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>DevOps Portfolio</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #0d1117; color: #c9d1d9; padding: 40px; }
+        .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        h1 { color: #58a6ff; }
+        h2 { color: #3fb950; }
+        a { color: #58a6ff; text-decoration: none; }
+    </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen font-sans">
-    
-    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="/" class="text-xl font-bold bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
-                {{ profile.name }}<span class="text-sky-400">.dev</span>
-            </a>
-            <div class="flex items-center space-x-4">
-                <a href="{{ profile.portfolio_url }}" target="_blank" class="text-sm text-slate-400 hover:text-sky-400 transition">Vercel Portfolio ↗</a>
-                <a href="{{ profile.github }}" target="_blank" class="text-sm bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 transition">GitHub Profile</a>
-            </div>
-        </div>
-    </header>
-
-    <main class="max-w-4xl mx-auto px-4 py-12">
-        <section class="mb-12 border-b border-slate-800 pb-8">
-            <div class="inline-block px-3 py-1 bg-sky-500/10 text-sky-400 text-xs font-semibold rounded-full border border-sky-500/20 mb-3">
-                {{ profile.role }}
-            </div>
-            <h1 class="text-4xl font-extrabold tracking-tight mb-4">
-                Assalomu alaykum, men {{ profile.name }} 👋
-            </h1>
-            <p class="text-slate-400 text-lg leading-relaxed max-w-2xl">
-                {{ profile.bio }}
-            </p>
-        </section>
-
-        <section>
-            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-                <span>📑</span> So'nggi Maqolalar
-            </h2>
-            <div class="grid gap-6">
-                {% for post in posts %}
-                <article class="p-6 bg-slate-800/50 hover:bg-slate-800 border border-slate-700/50 hover:border-sky-500/40 rounded-xl transition group">
-                    <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
-                        <span class="bg-sky-500/10 text-sky-400 px-2.5 py-0.5 rounded-md font-medium">{{ post.category }}</span>
-                        <span>{{ post.date }}</span>
-                    </div>
-                    <h3 class="text-xl font-semibold group-hover:text-sky-400 transition mb-2">
-                        {{ post.title }}
-                    </h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        {{ post.summary }}
-                    </p>
-                </article>
-                {% endfor %}
-            </div>
-        </section>
-    </main>
-
+<body>
+    <div class="card">
+        <h1>{{ profile.name }}</h1>
+        <p><strong>{{ profile.role }}</strong></p>
+        <p>{{ profile.bio }}</p>
+    </div>
+    <h2>So'nggi Maqolalar</h2>
+    {% for post in posts %}
+    <div class="card">
+        <h3>{{ post.title }}</h3>
+        <small>{{ post.date }} | {{ post.category }}</small>
+        <p>{{ post.summary }}</p>
+    </div>
+    {% endfor %}
 </body>
 </html>
