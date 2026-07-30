@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>DevOps Blog</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div style="max-width: 800px; margin: 50px auto; font-family: sans-serif; padding: 20px;">
+        <h1 style="color: #38bdf8;">🚀 DevOps Blog Ishga Tushdi!</h1>
+        <p>FastAPI va Python orqali yaratilgan blog loyihasi.</p>
+        <hr>
+        {% for post in posts %}
+            <div style="background: #1e293b; color: white; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                <span style="background: #38bdf8; color: black; padding: 2px 8px; border-radius: 4px; font-size: 12px;">{{ post.category }}</span>
+                <h2>{{ post.title }}</h2>
+                <p>{{ post.content }}</p>
+                <small style="color: #94a3b8;">Sana: {{ post.date }}</small>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
