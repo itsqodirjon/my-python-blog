@@ -1,29 +1,558 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DevOps Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qodirjon — DevOps Engineer & Infrastructure Specialist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        body { font-family: Arial, sans-serif; background: #0d1117; color: #c9d1d9; padding: 40px; }
-        .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
-        h1 { color: #58a6ff; }
-        h2 { color: #3fb950; }
-        a { color: #58a6ff; text-decoration: none; }
+        :root {
+            --bg-color: #0a0c10;
+            --card-bg: #12161f;
+            --card-hover: #181e2b;
+            --accent: #ff5722;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #1e2430;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* HEADER & NAVIGATION */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 8%;
+            background: rgba(10, 12, 16, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo { font-size: 24px; font-weight: 800; color: var(--text-main); text-decoration: none; }
+        .logo span { color: var(--accent); }
+
+        nav ul { display: flex; list-style: none; gap: 24px; }
+        nav a { color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 600; transition: color 0.3s; }
+        nav a:hover { color: var(--accent); }
+
+        /* HAMBURGER MENU ICON */
+        .menu-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        /* SECTIONS GENERAL */
+        section { padding: 70px 8% 30px; }
+
+        .sub-title { color: var(--accent); font-size: 12.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
+        .sec-title { font-size: 34px; font-weight: 800; margin-bottom: 25px; }
+
+        /* HERO SECTION */
+        .hero { 
+            padding-top: 110px; 
+            padding-bottom: 40px;
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            gap: 40px; 
+        }
+        .hero-content { flex: 1.1; }
+        .hero-content h1 { font-size: 48px; font-weight: 800; margin: 8px 0 14px; line-height: 1.15; }
+        .hero-content p { color: var(--text-muted); font-size: 15px; max-width: 560px; }
+
+        .hero-terminal-wrapper { flex: 0.9; width: 100%; }
+
+        .interactive-terminal {
+            background: #0d1117;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+            font-family: 'Fira Code', monospace;
+        }
+
+        .term-header { background: #161b22; padding: 10px 16px; display: flex; align-items: center; border-bottom: 1px solid var(--border); }
+        .dots { display: flex; gap: 8px; }
+        .dot { width: 11px; height: 11px; border-radius: 50%; }
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+        .term-title { color: var(--text-muted); font-size: 12px; margin: 0 auto; }
+
+        .term-body { padding: 16px; color: #38ef7d; font-size: 12.5px; line-height: 1.5; min-height: 170px; max-height: 220px; overflow-y: auto; }
+        .term-line { margin-bottom: 6px; }
+        .term-prompt { color: var(--accent); font-weight: 600; }
+
+        .term-input-line { display: flex; align-items: center; gap: 8px; padding: 0 16px 14px; }
+        .term-input { background: transparent; border: none; outline: none; color: var(--text-main); font-family: 'Fira Code', monospace; font-size: 13px; width: 100%; }
+
+        /* ABOUT & EDUCATION GRID */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+        .info-card { background: var(--card-bg); border: 1px solid var(--border); padding: 26px; border-radius: 14px; }
+        .info-card h3 { margin-bottom: 16px; font-size: 18px; display: flex; align-items: center; gap: 10px; }
+        .info-card h3 i { color: var(--accent); }
+
+        .info-list { list-style: none; }
+        .info-list li { margin-bottom: 12px; color: var(--text-muted); border-bottom: 1px dashed var(--border); padding-bottom: 8px; font-size: 13.5px; }
+        .info-list strong { color: var(--text-main); }
+
+        .edu-badge { display: inline-block; background: rgba(255, 87, 34, 0.15); color: var(--accent); font-size: 11px; font-weight: 800; padding: 2px 7px; border-radius: 4px; margin-left: 6px; text-transform: uppercase; }
+
+        .skill-bar { margin-bottom: 14px; }
+        .skill-info { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 13.5px; }
+        .bar-bg { background: var(--border); height: 7px; border-radius: 4px; }
+        .bar-fill { background: var(--accent); height: 100%; border-radius: 4px; }
+
+        /* GRID CARDS WITH RICH CONTENT */
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+        .custom-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 26px;
+            border-radius: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .custom-card:hover {
+            border-color: var(--accent);
+            background: var(--card-hover);
+            transform: translateY(-6px);
+            box-shadow: 0 10px 25px rgba(255, 87, 34, 0.18);
+        }
+
+        .custom-card i.card-icon {
+            font-size: 32px;
+            color: var(--accent);
+            margin-bottom: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .custom-card:hover i.card-icon { transform: scale(1.1); }
+        .custom-card h3 { font-size: 18px; margin-bottom: 10px; color: var(--text-main); }
+        .custom-card p { color: var(--text-muted); font-size: 13.5px; line-height: 1.6; margin-bottom: 12px; }
+
+        .card-list { list-style: none; margin-top: 10px; }
+        .card-list li { color: var(--text-muted); font-size: 13px; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+        .card-list li i { color: var(--accent); font-size: 10px; }
+
+        .card-tag {
+            color: var(--accent);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .contact-card-link { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 8px; 
+            color: var(--accent); 
+            text-decoration: none; 
+            font-weight: 700; 
+            font-size: 14px;
+            margin-top: 16px;
+            transition: gap 0.3s ease;
+        }
+
+        .custom-card:hover .contact-card-link { gap: 12px; }
+
+        footer { text-align: center; padding: 25px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 13.5px; }
+
+        /* RESPONSIVE MEDIA QUERIES & MOBILE MENU */
+        @media (max-width: 768px) {
+            header { padding: 14px 6%; }
+            .menu-toggle { display: block; }
+
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #0d1117;
+                border-bottom: 1px solid var(--border);
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+            }
+
+            nav.active {
+                max-height: 320px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                padding: 18px 6%;
+                gap: 16px;
+            }
+
+            nav a {
+                display: block;
+                font-size: 15px;
+            }
+
+            section { padding: 50px 5% 25px; }
+            .hero { flex-direction: column; text-align: center; padding-top: 90px; }
+            .hero-content h1 { font-size: 34px; }
+            .hero-content p { margin: 0 auto; }
+            .about-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 { font-size: 28px; }
+            .sec-title { font-size: 24px; }
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>{{ profile.name }}</h1>
-        <p><strong>{{ profile.role }}</strong></p>
-        <p>{{ profile.bio }}</p>
-    </div>
-    <h2>So'nggi Maqolalar</h2>
-    {% for post in posts %}
-    <div class="card">
-        <h3>{{ post.title }}</h3>
-        <small>{{ post.date }} | {{ post.category }}</small>
-        <p>{{ post.summary }}</p>
-    </div>
-    {% endfor %}
+
+    <header>
+        <a href="#home" class="logo">Qodirjon<span>.</span></a>
+        
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <nav id="navbar">
+            <ul>
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#blog" class="nav-link">Blog</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="sub-title">DEVOPS ENGINEER & SYSTEM ARCHITECT</div>
+            <h1>Qodirjon</h1>
+            <p>DevOps Engineer with background in automated deployments, Linux administration, containerization, and backend systems. Experienced in configuring web servers, setting up isolated Docker containers, and designing CI/CD workflows.</p>
+        </div>
+
+        <div class="hero-terminal-wrapper">
+            <div class="interactive-terminal">
+                <div class="term-header">
+                    <div class="dots">
+                        <span class="dot dot-red"></span>
+                        <span class="dot dot-yellow"></span>
+                        <span class="dot dot-green"></span>
+                    </div>
+                    <span class="term-title">qodirjon@devops-node:~</span>
+                </div>
+                <div class="term-body" id="term-output">
+                    <div class="term-line"><span class="term-prompt">sys@qodirjon:~$</span> systemctl status devops.service</div>
+                    <div class="term-line" style="color: #38ef7d;">● devops.service - Qodirjon DevOps Infrastructure</div>
+                    <div class="term-line" style="color: #94a3b8;">   Active: active (running) since 2026-07-30</div>
+                    <div class="term-line" style="color: #cbd5e1; margin-top: 8px;">Try typing: 'help', 'whoami', 'skills', 'projects' below:</div>
+                </div>
+                <div class="term-input-line">
+                    <span class="term-prompt">qodirjon:~$</span>
+                    <input type="text" id="term-input" class="term-input" placeholder="type a command..." autocomplete="off">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="sub-title">01. BIOGRAPHY & TECHNICAL SKILLS</div>
+        <h2 class="sec-title">About & Qualifications</h2>
+        
+        <div class="about-grid">
+            <div class="info-card">
+                <h3><i class="fas fa-user-check"></i> Personal Profile</h3>
+                <ul class="info-list">
+                    <li><strong>Full Name:</strong> Qodirjon</li>
+                    <li><strong>Specialization:</strong> DevOps Infrastructure & Backend Systems</li>
+                    <li><strong>Education:</strong> High School Graduate (School 44, 2025 finish)</li>
+                    <li><strong>Username / Handle:</strong> @itsqodirjon</li>
+                    <li><strong>Location:</strong> Tashkent, Uzbekistan</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3><i class="fas fa-graduation-cap"></i> Courses & Education</h3>
+                <ul class="info-list">
+                    <li><strong>DevOps Course</strong> — Boot.dev <span class="edu-badge">Completed</span></li>
+                    <li><strong>Backend Express</strong> — 42.uz <span class="edu-badge">Completed</span></li>
+                    <li><strong>DevOps Engineering</strong> — 42.uz <span class="edu-badge" style="background: rgba(39, 201, 63, 0.2); color: #27c93f;">In Progress</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <h3><i class="fas fa-code"></i> Core Skills Breakdown</h3>
+            <div class="skill-bar">
+                <div class="skill-info"><span>Linux Administration & System Configuration (Bash, SSH, Systemd)</span><span style="color: var(--accent);">92%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 92%;"></div></div>
+            </div>
+            <div class="skill-bar">
+                <div class="skill-info"><span>Docker & Container Isolation (Dockerfiles, Docker Compose)</span><span style="color: var(--accent);">85%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 85%;"></div></div>
+            </div>
+            <div class="skill-bar">
+                <div class="skill-info"><span>Networking & Protocols (TCP/IP, Routing, Subnetting, Socket States)</span><span style="color: var(--accent);">80%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 80%;"></div></div>
+            </div>
+            <div class="skill-bar">
+                <div class="skill-info"><span>CI/CD Workflows & Cloud Deployment (GitHub Actions, Vercel)</span><span style="color: var(--accent);">78%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 78%;"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="sub-title">02. FEATURED WORKS</div>
+        <h2 class="sec-title">Recent Projects</h2>
+
+        <div class="grid-cards">
+            <div class="custom-card">
+                <div>
+                    <span class="card-tag">DEVOPS & DEPLOYMENT</span>
+                    <h3>Personal Portfolio Engine</h3>
+                    <p>Designed and configured an interactive personal Web & DevOps portfolio site hosted on Vercel with real-time browser terminal emulator.</p>
+                    <ul class="card-list">
+                        <li><i class="fas fa-check"></i> HTML5, CSS3, JavaScript Terminal</li>
+                        <li><i class="fas fa-check"></i> Vercel Deployment & Continuous Integration</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="custom-card">
+                <div>
+                    <span class="card-tag">AUTOMATION & MONITORS</span>
+                    <h3>Telegram System Alert Bot</h3>
+                    <p>Created automated Shell scripts to monitor server resources (CPU, RAM, Disk) and instantly notify admin via Telegram API.</p>
+                    <ul class="card-list">
+                        <li><i class="fas fa-check"></i> Bash Scripting & Cronjobs</li>
+                        <li><i class="fas fa-check"></i> Telegram Bot API Integration</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="custom-card">
+                <div>
+                    <span class="card-tag">CONTAINERIZATION</span>
+                    <h3>Multi-Container Web Infrastructure</h3>
+                    <p>Configured Docker Compose environment uniting Express Backend, Nginx reverse proxy, and Database with automated container restarts.</p>
+                    <ul class="card-list">
+                        <li><i class="fas fa-check"></i> Multi-stage Dockerfiles</li>
+                        <li><i class="fas fa-check"></i> Network subnetting between containers</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="sub-title">03. EXPERTISE & SERVICES</div>
+        <h2 class="sec-title">What I Do</h2>
+
+        <div class="grid-cards">
+            <div class="custom-card">
+                <div>
+                    <i class="fab fa-linux card-icon"></i>
+                    <h3>Linux System Administration</h3>
+                    <p>Managing Linux servers, configuring access permissions, log rotation, system services (Systemd), and OS kernel security hardening.</p>
+                    <ul class="card-list">
+                        <li><i class="fas fa-circle"></i> User access & SSH key configuration</li>
+                        <li><i class="fas fa-circle"></i> Disk partitioning & LVM management</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="custom-card">
+                <div>
+                    <i class="fas fa-cogs card-icon"></i>
+                    <h3>Automated CI/CD Workflows</h3>
+                    <p>Building automated continuous integration and continuous deployment pipelines using GitHub Actions for code testing and server auto-deploy.</p>
+                    <ul class="card-list">
+                        <li><i class="fas fa-circle"></i> Automated testing & build pipelines</li>
+                        <li><i class="fas fa-circle"></i> Zero-downtime deployment strategies</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="custom-card">
+                <div>
+                    <i class="fab fa-docker card-icon"></i>
+                    <h3>Docker & Containerization</h3>
+                    <p>Creating optimized Dockerfiles, managing Docker Compose multi-container services, volume storage persistence, and internal networking.</p>
+                    <ul class="card-list">
+                        <li><i class="fas fa-circle"></i> Alpine-based lightweight image creation</li>
+                        <li><i class="fas fa-circle"></i> Docker virtual networking setup</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="blog">
+        <div class="sub-title">04. ARTICLES & INSIGHTS</div>
+        <h2 class="sec-title">Technical Articles</h2>
+
+        <div class="grid-cards">
+            <div class="custom-card">
+                <div>
+                    <span class="card-tag">DEVOPS & SHELL</span>
+                    <h3>Building a Telegram Bot for Server Monitoring</h3>
+                    <p>A comprehensive step-by-step guide on combining Linux Bash scripts, cron tasks, and Telegram API for sending real-time server health notifications.</p>
+                </div>
+            </div>
+            <div class="custom-card">
+                <div>
+                    <span class="card-tag">NETWORKING</span>
+                    <h3>Network Diagnostics: netstat, tcpdump & ss</h3>
+                    <p>An in-depth breakdown of network socket states, troubleshooting open ports, capturing packet traffic, and diagnosing latency issues in Linux.</p>
+                </div>
+            </div>
+            <div class="custom-card">
+                <div>
+                    <span class="card-tag">BACKEND & DEPLOYMENT</span>
+                    <h3>Express Backend Architecture & Containerization</h3>
+                    <p>Best practices for structuring Express.js applications and packaging them into Docker containers for production environments.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="sub-title">05. GET IN TOUCH</div>
+        <h2 class="sec-title">Contact Information</h2>
+        <div class="grid-cards">
+            <div class="custom-card">
+                <div>
+                    <i class="fab fa-github card-icon"></i>
+                    <h3>GitHub</h3>
+                    <p>Explore my open-source infrastructure projects, Bash automation scripts, and Docker setups.</p>
+                </div>
+                <a href="https://github.com/itsqodirjon" target="_blank" class="contact-card-link">github.com/itsqodirjon <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="custom-card">
+                <div>
+                    <i class="fab fa-linkedin card-icon"></i>
+                    <h3>LinkedIn</h3>
+                    <p>Connect with me professionally to discuss career opportunities, DevOps pipelines, and collaborations.</p>
+                </div>
+                <a href="https://linkedin.com/in/itsqodirjon" target="_blank" class="contact-card-link">linkedin.com/in/itsqodirjon <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="custom-card">
+                <div>
+                    <i class="fab fa-telegram card-icon"></i>
+                    <h3>Telegram</h3>
+                    <p>Direct message me for instant communications, project inquiries, and system consulting.</p>
+                </div>
+                <a href="https://t.me/itsqodirjon" target="_blank" class="contact-card-link">@itsqodirjon <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Qodirjon. All rights reserved. Built for DevOps & Cloud Systems.</p>
+    </footer>
+
+    <script>
+        // MOBILE HAMBURGER MENU JS
+        const menuToggle = document.getElementById('menu-toggle');
+        const navbar = document.getElementById('navbar');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        menuToggle.addEventListener('click', () => {
+            navbar.classList.toggle('active');
+            const icon = menuToggle.querySelector('i');
+            if (navbar.classList.contains('active')) {
+                icon.className = 'fas fa-times';
+            } else {
+                icon.className = 'fas fa-bars';
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navbar.classList.remove('active');
+                menuToggle.querySelector('i').className = 'fas fa-bars';
+            });
+        });
+
+        // TERMINAL SIMULATOR JS
+        const termInput = document.getElementById('term-input');
+        const termOutput = document.getElementById('term-output');
+
+        if(termInput) {
+            termInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    const cmd = this.value.trim().toLowerCase();
+                    let response = '';
+
+                    if (cmd === 'help') {
+                        response = '<span>Commands: <strong>whoami</strong>, <strong>skills</strong>, <strong>projects</strong>, <strong>education</strong>, <strong>clear</strong></span>';
+                    } else if (cmd === 'whoami') {
+                        response = '<span>Qodirjon — DevOps Engineer & Infrastructure Specialist (@itsqodirjon)</span>';
+                    } else if (cmd === 'skills') {
+                        response = '<span>Linux Admin, Docker, TCP/IP Networking, Git, Bash Scripting, CI/CD</span>';
+                    } else if (cmd === 'projects') {
+                        response = '<span>1. Personal Portfolio Engine\n2. Telegram Alert Bot\n3. Multi-Container Infrastructure</span>';
+                    } else if (cmd === 'education') {
+                        response = '<span>- Boot.dev (DevOps Completed)\n- 42.uz (Backend Express Completed)\n- 42.uz (DevOps In Progress)</span>';
+                    } else if (cmd === 'clear') {
+                        termOutput.innerHTML = '';
+                        this.value = '';
+                        return;
+                    } else if (cmd !== '') {
+                        response = `<span style="color: #ff5f56;">command not found: ${cmd}</span>`;
+                    }
+
+                    if (cmd !== '') {
+                        const newLine = document.createElement('div');
+                        newLine.className = 'term-line';
+                        newLine.innerHTML = `<span class="term-prompt">qodirjon:~$</span> ${cmd}`;
+                        termOutput.appendChild(newLine);
+
+                        if(response) {
+                            const respLine = document.createElement('div');
+                            respLine.className = 'term-line';
+                            respLine.innerHTML = response.replace(/\n/g, '<br>');
+                            termOutput.appendChild(respLine);
+                        }
+
+                        this.value = '';
+                        termOutput.scrollTop = termOutput.scrollHeight;
+                    }
+                }
+            });
+        }
+    </script>
 </body>
 </html>
